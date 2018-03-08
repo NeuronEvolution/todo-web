@@ -1,4 +1,3 @@
-import { Style } from 'jss';
 import * as React from 'react';
 import { parseQueryString } from './common';
 
@@ -16,7 +15,7 @@ export interface LoginResultAction {
 export interface Props {
     loginUrl: string;
     content: JSX.Element;
-    style?: Style;
+    style?: React.CSSProperties;
 }
 
 interface State {
@@ -24,7 +23,7 @@ interface State {
     refreshToken?: string;
 }
 
-export const DEFAULT_STYLE_FULLSCREEN: Style = {
+export const DEFAULT_STYLE_FULLSCREEN: React.CSSProperties = {
     position: 'absolute',
     margin: 'auto',
     top: '0',
