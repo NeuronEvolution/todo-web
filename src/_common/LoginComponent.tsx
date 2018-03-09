@@ -1,17 +1,6 @@
 import * as React from 'react';
 import { parseQueryString } from './common';
 
-export interface LoginResult {
-    accessToken: string;
-    refreshToken: string;
-}
-
-export interface LoginResultAction {
-    type: string;
-    error: boolean;
-    payload: LoginResult;
-}
-
 export interface Props {
     loginUrl: string;
     content: JSX.Element;
@@ -58,20 +47,18 @@ export default class LoginComponent extends React.Component<Props, State> {
             '?fromOrigin=' + encodeURIComponent(window.location.origin);
 
         return (
-            <div>
-                <iframe
-                    style={style}
-                    src={url}
-                />
-            </div>
+            <iframe
+                style={style}
+                src={url}
+            />
         );
     }
 
     private loginFrameEventListener(e: MessageEvent) {
-        switch (e.data.type) {
+        const data = e.data;
+        switch (data.type) {
             case 'onLoginCallback':
-                const action: LoginResultAction = e.data;
-                const {accessToken, refreshToken} = action.payload;
+                const {accessToken, refreshToken} = data.payload;
                 this.onLoginCallback(accessToken, refreshToken);
                 break;
             default:
