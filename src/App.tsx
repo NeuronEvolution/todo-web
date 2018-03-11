@@ -1,25 +1,33 @@
 import * as React from 'react';
-import LoginComponent from './_common/LoginComponent';
+import { connect } from 'react-redux';
+import LoginFrame from './_common/login/LoginFrame';
+import { User } from './_common/login/redux_login';
+import MainPage from './mainView/MainPage';
 
-interface State {
-    token?: string;
-    refreshToken?: string;
+export interface Props {
+    user: User;
 }
 
-class App extends React.Component<{}, State> {
+class App extends React.Component<Props> {
+    private static renderLoginFrame() {
+        return (
+            <LoginFrame loginUrl={'127.0.0.1:3004'}/>
+        );
+    }
+
     public render() {
         return (
-            <LoginComponent
-                loginUrl={'127.0.0.1:3004'}
-                content={this.renderApp()}/>
-        );
-    }
-
-    private renderApp(): JSX.Element {
-        return (
-            <div>sss</div>
+            <div>
+                <MainPage s={''}/>
+                {this.props.user.accessToken === '' && App.renderLoginFrame()}
+            </div>
         );
     }
 }
 
-export default App;
+const selectProps = (rootState: {user: User}) => ({
+    user: rootState.user
+});
+
+export default connect(selectProps, {
+})(App);

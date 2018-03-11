@@ -1,10 +1,14 @@
 import { combineReducers } from 'redux';
-import { StandardAction } from './_common/action';
+import { User, userReducer } from './_common/login/redux_login';
+import { errorMessageReducer } from './_common/redux_error';
+import { TextTimestamp } from './_common/TimedText';
 
-const hello = (state: string= '', action: StandardAction): string => {
-    return state;
-};
+export interface RootState {
+    user: User;
+    errorMessage: TextTimestamp;
+}
 
-export const rootReducer = combineReducers({
-    hello
+export const rootReducer = combineReducers<RootState>({
+    user: userReducer,
+    errorMessage: errorMessageReducer
 });
