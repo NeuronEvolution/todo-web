@@ -8,19 +8,18 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import App from './App';
-import { rootReducer, RootState } from './redux';
+import { rootReducer } from './redux';
+
+const logger = createLogger({collapsed: false});
+
+const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(thunk, logger)));
 
 const theme = createMuiTheme();
-const logger = createLogger({collapsed: false});
-export const REDUX_STORE = createStore<RootState>(
-    rootReducer,
-    composeWithDevTools(applyMiddleware(thunk, logger))
-);
 
 class Root extends React.Component {
     public render() {
         return (
-            <Provider store={REDUX_STORE}>
+            <Provider store={store}>
                 <MuiThemeProvider theme={theme}>
                     <BrowserRouter>
                         <Route path="/" component={App}/>

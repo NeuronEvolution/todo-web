@@ -1,0 +1,505 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "",
+    "title": "Todo Private API",
+    "contact": {
+      "name": "mars"
+    },
+    "version": "v1"
+  },
+  "basePath": "/api-private/v1/todo",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "Basic": {
+      "type": "basic"
+    },
+    "Bearer": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization"
+    }
+  },
+  "parameters": {
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "",
+        "operationId": "GetTodoList",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "friendID",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "security": [
+          {
+            "Bearer": [
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TodoItem"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "operationId": "AddTodo",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "todoItem",
+            "schema": {
+              "$ref": "#/definitions/TodoItem"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "Bearer": [
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/{todoId}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "todoId",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "",
+        "operationId": "GetTodo",
+        "parameters": [
+        ],
+        "security": [
+          {
+            "Bearer": [
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/TodoItem"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "operationId": "UpdateTodo",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "todoItem",
+            "schema": {
+              "$ref": "#/definitions/TodoItem"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "Bearer": [
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      },
+      "delete": {
+        "summary": "",
+        "operationId": "RemoveTodo",
+        "parameters": [
+        ],
+        "security": [
+          {
+            "Bearer": [
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/listByCategory": {
+      "get": {
+        "summary": "",
+        "operationId": "GetTodoListByCategory",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "friendID",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "security": [
+          {
+            "Bearer": [
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TodoItemGroup"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userProfile": {
+      "get": {
+        "summary": "",
+        "operationId": "GetUserProfile",
+        "parameters": [
+        ],
+        "security": [
+          {
+            "Bearer": [
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/UserProfile"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "",
+        "operationId": "UpdateUserProfile",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "userProfile",
+            "schema": {
+              "$ref": "#/definitions/UserProfile"
+            }
+          }
+        ],
+        "security": [
+          {
+            "Bearer": [
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/userProfile/userName": {
+      "post": {
+        "summary": "",
+        "operationId": "UpdateUserProfileUserName",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "userName",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "Bearer": [
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/userProfile/todoVisibility": {
+      "post": {
+        "summary": "",
+        "operationId": "UpdateUserProfileTodoVisibility",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "visibility",
+            "schema": {
+              "$ref": "#/definitions/TodoVisibility"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "Bearer": [
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/friends": {
+      "get": {
+        "summary": "",
+        "operationId": "GetFriendsList",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pageSize",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "pageToken",
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": [
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/FriendInfoList"
+            }
+          }
+        }
+      }
+    },
+    "/friends/{friendID}": {
+      "get": {
+        "summary": "",
+        "operationId": "GetFriend",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "friendID",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "Bearer": [
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "$ref": "#/definitions/FriendInfo"
+            }
+          }
+        }
+      }
+    },
+    "/categoryNames": {
+      "get": {
+        "summary": "",
+        "operationId": "GetCategoryNameList",
+        "parameters": [
+        ],
+        "security": [
+          {
+            "Bearer": [
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "TodoStatus": {
+      "type": "string",
+      "enum": [
+        "ongoing",
+        "completed",
+        "discard"
+      ]
+    },
+    "TodoVisibility": {
+      "type": "string",
+      "enum": [
+        "private",
+        "public",
+        "friend"
+      ]
+    },
+    "TodoItem": {
+      "type": "object",
+      "properties": {
+        "todoId": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/TodoStatus"
+        },
+        "priority": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "todoId",
+        "category",
+        "title",
+        "status"
+      ]
+    },
+    "TodoItemGroup": {
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string"
+        },
+        "todoItemList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TodoItem"
+          }
+        }
+      },
+      "required": [
+        "category",
+        "todoItemList"
+      ]
+    },
+    "UserProfile": {
+      "type": "object",
+      "properties": {
+        "userName": {
+          "type": "string"
+        },
+        "todoVisibility": {
+          "$ref": "#/definitions/TodoVisibility"
+        }
+      },
+      "required": [
+        "userName",
+        "todoVisibility"
+      ]
+    },
+    "FriendInfo": {
+      "type": "object",
+      "properties": {
+        "userID": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "todoVisibility": {
+          "$ref": "#/definitions/TodoVisibility"
+        },
+        "todoCount": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "required": [
+        "userID",
+        "userName",
+        "todoVisibility",
+        "todoCount"
+      ]
+    },
+    "FriendInfoList": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FriendInfo"
+          }
+        }
+      },
+      "required": [
+        "items",
+        "nextPageToken"
+      ]
+    }
+  }
+}
