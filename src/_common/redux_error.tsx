@@ -12,8 +12,10 @@ export const onApiError = (err: any, message: string): Dispatchable => (dispatch
         return; // skip Unauthorized error
     }
 
-    const text = err.toString() === 'TypeError: Network request failed'
-        ? '网络连接失败:' + message : (err.message ? err.message : err.toString());
+    const errString = err.toString();
+    const text = (errString === 'TypeError: Network request failed' || errString === 'TypeError: Failed to fetch') ?
+        '网络连接失败' + (message ? ':' : '') + message : (err.message ? err.message : err.toString());
+
     dispatch(onErrorMessage(text));
 };
 
