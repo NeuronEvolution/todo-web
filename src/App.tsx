@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import LoginFrame from './_common/login/LoginFrame';
 import { User } from './_common/login/redux_login';
-import { SERVER_IP } from './ENV';
+import { HOST } from './ENV';
 import { RootState } from './redux';
 import TodoPage from './todoView/TodoPage';
 
@@ -137,7 +137,7 @@ class App extends React.Component<Props, State> {
                     borderWidth: '1px',
                     backgroundColor: '#fff'
                 }}
-                loginUrl={'http://' + SERVER_IP + ':3004'}
+                loginUrl={HOST + '/web/user/login'}
                 onLoginCallback={() => {
                     console.log('');
                 }}

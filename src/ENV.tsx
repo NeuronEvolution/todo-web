@@ -1,1 +1,1 @@
-export const SERVER_IP = '127.0.0.1';
+export const HOST = 'http://106.14.204.11:8080';

@@ -3,11 +3,12 @@ import { apiCall } from './_common/login/redux_login';
 import {
     DefaultApiFactory as TodoPrivateApi, FriendInfo, getFriendsListParams, getTodoListParams, TodoItemGroup
 } from './api/todo-private/gen';
+import { HOST } from './ENV';
 import { REDUX_STORE } from './index';
 
 const todoPrivateApi = TodoPrivateApi(
     {apiKey: () => REDUX_STORE.getState().user.accessToken},
-    fetch, 'http://' + '106.14.204.11' + ':9001/api-private/v1/todo'
+    fetch, HOST + '/api-private/v1/todo'
 );
 
 const ACTION_TODO_GET_FRIEND_LIST_SUCCESS = 'ACTION_TODO_GET_FRIEND_LIST_SUCCESS';
