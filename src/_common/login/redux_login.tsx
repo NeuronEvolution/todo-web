@@ -1,11 +1,11 @@
 import { Store } from 'react-redux';
 import { combineReducers } from 'redux';
-import { HOST } from '../../ENV';
+import { env } from '../../env';
 import { Dispatchable, StandardAction } from '../action';
 import { onApiError, onErrorMessage } from '../redux_error';
 import {DefaultApiFactory as UserPrivateApi, Token } from './user-private/gen';
 
-const userPrivateApiHost = HOST + '/api-private/v1/users';
+const userPrivateApiHost = env.host + '/api-private/v1/users';
 const userPrivateApi = UserPrivateApi(undefined, fetch, userPrivateApiHost);
 
 const ACTION_LOGIN_SUCCESS = 'ACTION_LOGIN_SUCCESS';
