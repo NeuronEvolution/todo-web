@@ -118,10 +118,10 @@ class TodoPage extends React.Component<Props, State> {
                         alignItems: 'center'
                     }}
                 >
-                    <label style={{color: '#444', fontSize: '14px'}}>
+                    <label style={{color: '#444', fontSize: '14px', marginLeft: '4%'}}>
                         {todoItem.title}
                     </label>
-                    <label style={{fontSize: '12px', color: statusColor}}>
+                    <label style={{marginRight: '4%', fontSize: '12px', color: statusColor}}>
                         {TodoPage.getTodoStatusName(todoItem.status)}
                     </label>
                 </div>
@@ -154,7 +154,10 @@ class TodoPage extends React.Component<Props, State> {
     public render() {
         return (
             <div style={{
-                display: 'flex', flexDirection: 'column', alignItems: 'center'
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                width: '100%'
             }}>
                 {TodoPage.renderHeader()}
                 {this.renderFriendList()}
@@ -195,7 +198,7 @@ class TodoPage extends React.Component<Props, State> {
         const {items} = this.props.friendsListWithPage;
 
         return (
-            <div style={{width: '320px'}}>
+            <div style={{width: '100%'}}>
                 {items && items.map(this.renderFriendListItem)}
             </div>
         );
@@ -226,7 +229,8 @@ class TodoPage extends React.Component<Props, State> {
         return (
             <div
                 style={{
-                    width: '100%',
+                    width: '92%',
+                    maxWidth: '360px',
                     height: '48px',
                     display: 'flex',
                     flexDirection: 'row',
@@ -329,7 +333,7 @@ class TodoPage extends React.Component<Props, State> {
                     width: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     justifyContent: 'center',
                     backgroundColor: '#eee'
                 }}
@@ -337,7 +341,7 @@ class TodoPage extends React.Component<Props, State> {
                     this.onCategoryClick(itemGroup);
                 }}
             >
-                <label style={{color: '#444', fontSize: '14px'}}>
+                <label style={{color: '#444', fontSize: '14px', marginLeft: '4%'}}>
                     {itemGroup.category}
                 </label>
             </div>

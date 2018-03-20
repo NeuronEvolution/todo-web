@@ -38,21 +38,34 @@ class App extends React.Component<Props, State> {
     private static renderDownloadContainer() {
         return (
             <div style={{
+                width: '100%',
+                maxWidth: '360px',
                 display: 'flex',
                 flexDirection: 'row',
-                justifyContent: 'center',
                 paddingTop: '48px',
                 paddingBottom: '48px'
             }}>
-                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '12px'}}>
+                <div
+                    style={{
+                        width: '50%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center'
+                    }}>
                     <img
-                        style={{width: '160px', height: '160px'}}
+                        style={{width: '90%', height: 'calc(width)'}}
                         src={androidDownloadImage}/>
                     <label>安卓版</label>
                 </div>
-                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginLeft: '12px'}}>
+                <div
+                    style={{
+                        width: '50%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center'
+                    }}>
                     <img
-                        style={{width: '160px', height: '160px'}}
+                        style={{width: '90%', height: 'calc(width)'}}
                         src={androidDownloadImage}/>
                     <label>苹果版</label>
                 </div>
@@ -82,7 +95,7 @@ class App extends React.Component<Props, State> {
 
     private renderMainPage() {
         return (
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
                 {App.renderHeader()}
                 {App.renderDownloadContainer()}
                 <div style={{width: '100%', height: '1px', backgroundColor: '#eee'}}/>
@@ -93,14 +106,20 @@ class App extends React.Component<Props, State> {
 
     private renderLoginButtonContainer() {
         return (
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                width: '100%'
+            }}>
                 <Button
                     style={{
+                        width: '90%',
+                        maxWidth: '360px',
                         backgroundColor: '#0088FF',
                         color: '#fff',
                         marginTop: '48px',
                         fontSize: '200%',
-                        width: '300px',
                         borderStyle: 'solid',
                         borderColor: '#eee',
                         borderWidth: '1px',
@@ -133,9 +152,7 @@ class App extends React.Component<Props, State> {
                     right: '0',
                     width: '100%',
                     height: '100%',
-                    borderColor: '#eee',
-                    borderWidth: '1px',
-                    backgroundColor: '#fff'
+                    borderWidth: '0px'
                 }}
                 loginUrl={env.host + '/web/user/login'}
                 onLoginCallback={() => {
