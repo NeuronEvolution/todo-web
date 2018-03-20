@@ -41,8 +41,8 @@ class App extends React.Component<Props, State> {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'center',
-                paddingTop: '12px',
-                paddingBottom: '12px'
+                paddingTop: '48px',
+                paddingBottom: '48px'
             }}>
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '12px'}}>
                     <img

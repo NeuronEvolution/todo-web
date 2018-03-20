@@ -1,4 +1,3 @@
-import { List, ListItem } from 'material-ui';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatchable } from '../_common/action';
@@ -7,7 +6,7 @@ import TimedComponent from '../_common/TimedComponent';
 import { TextTimestamp } from '../_common/TimedText';
 import {
     FriendInfo, getFriendsListParams, getTodoListParams, TodoItem, TodoItemGroup,
-    TodoStatus
+    TodoStatus, TodoVisibility
 } from '../api/todo-private/gen';
 import { RootState } from '../redux';
 import { apiTodoGetFriendsList, apiTodoGetTodoListByCategory, FriendsListWithPage } from '../redux_todo';
@@ -53,6 +52,19 @@ class TodoPage extends React.Component<Props, State> {
         }
     }
 
+    private static getTodoVisibilityName(p?: TodoVisibility): string {
+        switch (p) {
+            case TodoVisibility.Private:
+                return '保密的';
+            case TodoVisibility.Friend:
+                return '仅朋友可见';
+            case TodoVisibility.Public:
+                return '公开的';
+            default:
+                return '未知的';
+        }
+    }
+
     private static renderHeader() {
         return (
             <div style={{
@@ -70,28 +82,51 @@ class TodoPage extends React.Component<Props, State> {
         );
     }
 
+    private static renderTodoList(itemGroup: TodoItemGroup) {
+        const items = itemGroup.todoItemList;
+        if (!items || items.length === 0) {
+            return null;
+        }
+
+        return (
+            <div style={{width: '100%'}}>
+                {items.map(TodoPage.renderTodoItem)}
+            </div>
+        );
+    }
+
     private static renderTodoItem(todoItem: TodoItem) {
         const statusColor = TodoPage.getTodoStatusTextColor(todoItem.status);
 
         return (
-            <ListItem
+            <div
                 key={todoItem.todoId}
-                button={true}
-                divider={true}
                 style={{
-                    height: '48px',
                     display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between'
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    width: '100%'
                 }}
             >
-                <label style={{color: '#444', fontSize: '14px'}}>
-                    {todoItem.title}
-                </label>
-                <label style={{fontSize: '12px', color: statusColor}}>
-                    {TodoPage.getTodoStatusName(todoItem.status)}
-                </label>
-            </ListItem>
+                <div
+                    style={{
+                        height: '36px',
+                        width: '100%',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                    }}
+                >
+                    <label style={{color: '#444', fontSize: '14px'}}>
+                        {todoItem.title}
+                    </label>
+                    <label style={{fontSize: '12px', color: statusColor}}>
+                        {TodoPage.getTodoStatusName(todoItem.status)}
+                    </label>
+                </div>
+                <div style={{width: '100%', height: '1px', backgroundColor: '#eee'}}/>
+            </div>
         );
     }
 
@@ -107,7 +142,6 @@ class TodoPage extends React.Component<Props, State> {
         this.renderFriendListItem = this.renderFriendListItem.bind(this);
         this.renderFriendListItem = this.renderFriendListItem.bind(this);
         this.renderTodoItemCategory = this.renderTodoItemCategory.bind(this);
-        this.renderTodoList = this.renderTodoList.bind(this);
 
         this.setState({
             friendInfoSelected: null,
@@ -123,15 +157,7 @@ class TodoPage extends React.Component<Props, State> {
                 display: 'flex', flexDirection: 'column', alignItems: 'center'
             }}>
                 {TodoPage.renderHeader()}
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    flexDirection: 'row'
-                }}>
-                    {this.renderFriendList()}
-                    {this.renderCategoryList()}
-                    {this.renderTodoList()}
-                </div>
+                {this.renderFriendList()}
                 {this.renderGlobalToast()}
             </div>
         );
@@ -169,9 +195,9 @@ class TodoPage extends React.Component<Props, State> {
         const {items} = this.props.friendsListWithPage;
 
         return (
-            <List style={{width: '300px'}}>
+            <div style={{width: '320px'}}>
                 {items && items.map(this.renderFriendListItem)}
-            </List>
+            </div>
         );
     }
 
@@ -181,14 +207,30 @@ class TodoPage extends React.Component<Props, State> {
         const selected = friendId === selectedFriendID;
 
         return (
-            <ListItem
+            <div
                 key={friendInfo.userID}
-                button={true}
-                divider={true}
                 style={{
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }}>
+                {this.renderFriendItemHead(friendInfo)}
+                {!selected && <div style={{height: '1px', width: '100%', backgroundColor: '#eee'}}/>}
+                {selected && this.renderCategoryList()}
+            </div>
+        );
+    }
+
+    private renderFriendItemHead(friendInfo: FriendInfo) {
+        return (
+            <div
+                style={{
+                    width: '100%',
                     height: '48px',
                     display: 'flex',
                     flexDirection: 'row',
+                    alignItems: 'center',
                     justifyContent: 'space-between'
                 }}
                 onClick={() => {
@@ -198,21 +240,51 @@ class TodoPage extends React.Component<Props, State> {
                 <label style={{color: '#444', fontSize: '14px'}}>
                     {friendInfo.userName}
                 </label>
-                <label style={{color: '#aaa'}}>
-                    {selected ? '-' : ''}
-                </label>
-            </ListItem>
+                <div style={{width: 120}}>
+                    <div style={{
+                        height: '24px',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                    }}>
+                        <label style={{color: '#888', fontSize: '12px'}}>总计划数：</label>
+                        <label style={{color: '#888', fontSize: '12px'}}>{friendInfo.todoCount}</label>
+                    </div>
+                    <div style={{
+                        height: '24px',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                    }}>
+                        <label style={{color: '#888', fontSize: '12px'}}>是否公开：</label>
+                        <label style={{color: '#888', fontSize: '12px'}}>
+                            {TodoPage.getTodoVisibilityName(friendInfo.todoVisibility)}
+                        </label>
+                    </div>
+                </div>
+            </div>
         );
     }
 
     private onFriendItemClick(friendInfo: FriendInfo) {
-        this.setState({
-            friendInfoSelected: friendInfo,
-            itemGroupSelected: null
-        });
+        const {friendInfoSelected} = this.state;
+        if (!friendInfoSelected || friendInfoSelected.userID !== friendInfo.userID) {
+            this.setState({
+                friendInfoSelected: friendInfo,
+                itemGroupSelected: null
+            });
+
+            this.props.apiTodoGetTodoListByCategory({friendID: friendInfo.userID});
+        } else {
+            this.setState({
+                friendInfoSelected: null,
+                itemGroupSelected: null
+            });
+        }
 
         this.refreshFriendList();
-        this.props.apiTodoGetTodoListByCategory({friendID: friendInfo.userID});
     }
 
     private renderCategoryList() {
@@ -226,25 +298,40 @@ class TodoPage extends React.Component<Props, State> {
         }
 
         return (
-            <List style={{width: '300px', marginLeft: '48px'}}>
+            <div style={{width: '100%'}}>
                 {items.map(this.renderTodoItemCategory)}
-            </List>
+            </div>
         );
     }
 
     private renderTodoItemCategory(itemGroup: TodoItemGroup) {
-        const selected = this.state.itemGroupSelected === itemGroup;
-
         return (
-            <ListItem
+            <div
                 key={itemGroup.category}
-                button={true}
-                divider={true}
                 style={{
-                    height: '48px',
+                    width: '100%',
                     display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between'
+                    flexDirection: 'column',
+                    alignItems: 'center'
+                }}
+            >
+                {this.renderCategoryHead(itemGroup)}
+                {TodoPage.renderTodoList(itemGroup)}
+            </div>
+        );
+    }
+
+    private renderCategoryHead(itemGroup: TodoItemGroup) {
+        return (
+            <div
+                style={{
+                    height: '24px',
+                    width: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: '#eee'
                 }}
                 onClick={() => {
                     this.onCategoryClick(itemGroup);
@@ -253,10 +340,7 @@ class TodoPage extends React.Component<Props, State> {
                 <label style={{color: '#444', fontSize: '14px'}}>
                     {itemGroup.category}
                 </label>
-                <label style={{color: '#aaa'}}>
-                    {selected ? '-' : ''}
-                </label>
-            </ListItem>
+            </div>
         );
     }
 
@@ -264,24 +348,6 @@ class TodoPage extends React.Component<Props, State> {
         this.setState({
             itemGroupSelected: itemGroup
         });
-    }
-
-    private renderTodoList() {
-        const itemGroup = this.state.itemGroupSelected;
-        if (!itemGroup) {
-            return null;
-        }
-
-        const items = itemGroup.todoItemList;
-        if (!items || items.length === 0) {
-            return null;
-        }
-
-        return (
-            <List style={{width: '360px', marginLeft: '48px'}}>
-                {items.map(TodoPage.renderTodoItem)}
-            </List>
-        );
     }
 }
 
