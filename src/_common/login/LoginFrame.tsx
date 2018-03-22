@@ -17,7 +17,13 @@ const DefaultStyle: React.CSSProperties = {
     bottom: '0',
     left: '0',
     right: '0',
-    borderWidth: '0px',
+    width: '100%',
+    height: '100%',
+    // maxWidth: '721px',
+    // maxHeight: '540px',
+    borderColor: '#eee',
+    borderWidth: '1px',
+    backgroundColor: '#fff'
 };
 
 class LoginFrame extends React.Component<Props> {

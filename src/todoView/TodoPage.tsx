@@ -1,3 +1,4 @@
+import { Map } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatchable } from '../_common/action';
@@ -15,7 +16,7 @@ export interface Props {
     user: User;
     errorMessage: TextTimestamp;
     friendsListWithPage: FriendsListWithPage;
-    friendTodoListByCategory: TodoItemGroup[];
+    friendTodoListByCategoryMap: Map<string, TodoItemGroup[]>;
     apiTodoGetFriendsList: (p: getFriendsListParams) => Dispatchable;
     apiTodoGetTodoListByCategory: (p: getTodoListParams) => Dispatchable;
 }
@@ -198,7 +199,7 @@ class TodoPage extends React.Component<Props, State> {
         const {items} = this.props.friendsListWithPage;
 
         return (
-            <div style={{width: '100%'}}>
+            <div style={{width: '100%', maxWidth: '480px'}}>
                 {items && items.map(this.renderFriendListItem)}
             </div>
         );
@@ -216,7 +217,7 @@ class TodoPage extends React.Component<Props, State> {
                     width: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center'
+                    alignItems: 'center',
                 }}>
                 {this.renderFriendItemHead(friendInfo)}
                 {!selected && <div style={{height: '1px', width: '100%', backgroundColor: '#eee'}}/>}
@@ -292,11 +293,12 @@ class TodoPage extends React.Component<Props, State> {
     }
 
     private renderCategoryList() {
-        if (!this.state.friendInfoSelected) {
+        const {friendInfoSelected} = this.state;
+        if (!friendInfoSelected) {
             return null;
         }
 
-        const items = this.props.friendTodoListByCategory;
+        const items = this.props.friendTodoListByCategoryMap.get(friendInfoSelected.userID);
         if (!items || items.length === 0) {
             return null;
         }
@@ -359,7 +361,7 @@ const selectProps = (rootState: RootState) => ({
     user: rootState.user,
     errorMessage: rootState.errorMessage,
     friendsListWithPage: rootState.friendsListWithPage,
-    friendTodoListByCategory: rootState.friendTodoListByCategory
+    friendTodoListByCategoryMap: rootState.friendTodoListByCategoryMap
 });
 
 export default connect(selectProps, {

@@ -10,6 +10,7 @@ const todoPrivateApi = TodoPrivateApi(
     {apiKey: () => REDUX_STORE.getState().user.accessToken},
     fetch, env.host + '/api-private/v1/todo'
 );
+import { Map } from 'immutable';
 
 const ACTION_TODO_GET_FRIEND_LIST_SUCCESS = 'ACTION_TODO_GET_FRIEND_LIST_SUCCESS';
 const ACTION_TODO_LIST_BY_CATEGORY_SUCCESS = 'ACTION_TODO_LIST_BY_CATEGORY_SUCCESS';
@@ -52,11 +53,13 @@ export const todoListByCategoryReducer = (state: TodoItemGroup[]= [], action: St
     }
 };
 
-export const friendTodoListByCategoryReducer
-    = (state: TodoItemGroup[]= [], action: StandardAction): TodoItemGroup[] => {
+const initFriendTodoMap = Map<string, TodoItemGroup[]>();
+export const friendTodoListByCategoryMapReducer
+    = (state: Map<string, TodoItemGroup[]>= initFriendTodoMap,
+       action: StandardAction): Map<string, TodoItemGroup[]> => {
     switch (action.type) {
         case ACTION_TODO_LIST_BY_CATEGORY_FRIEND_SUCCESS:
-            return action.payload;
+            return state.set(action.payload.friendID, action.payload.result);
         default:
             return state;
     }
@@ -80,7 +83,13 @@ export const apiTodoGetTodoListByCategory = (p: getTodoListParams): Dispatchable
     return apiCall(REDUX_STORE, () => {
         return todoPrivateApi.getTodoListByCategory(p.friendID).then((result: TodoItemGroup[]) => {
             if (p.friendID) {
-                dispatch({type: ACTION_TODO_LIST_BY_CATEGORY_FRIEND_SUCCESS, payload: result});
+                dispatch({
+                    type: ACTION_TODO_LIST_BY_CATEGORY_FRIEND_SUCCESS,
+                    payload: {
+                        friendID: p.friendID,
+                        result
+                    }
+                });
             } else {
                 dispatch({type: ACTION_TODO_LIST_BY_CATEGORY_SUCCESS, payload: result});
             }
