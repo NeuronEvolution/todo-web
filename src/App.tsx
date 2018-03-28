@@ -67,7 +67,7 @@ class App extends React.Component<Props, State> {
                     <img
                         style={{width: '90%', height: 'calc(width)'}}
                         src={androidDownloadImage}/>
-                    <label>苹果版</label>
+                    <label>苹果版(敬请期待)</label>
                 </div>
             </div>
         );

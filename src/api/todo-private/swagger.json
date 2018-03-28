@@ -371,7 +371,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/CategoryInfo"
               }
             }
           }
@@ -499,6 +499,22 @@
       "required": [
         "items",
         "nextPageToken"
+      ]
+    },
+    "CategoryInfo":{
+      "type": "object",
+      "properties": {
+        "category":{
+          "type": "string"
+        },
+        "todoCount":{
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "required": [
+        "category",
+        "todoCount"
       ]
     }
   }
