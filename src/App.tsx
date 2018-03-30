@@ -42,8 +42,7 @@ class App extends React.Component<Props, State> {
                 maxWidth: '360px',
                 display: 'flex',
                 flexDirection: 'row',
-                paddingTop: '48px',
-                paddingBottom: '48px'
+                marginTop: '48px'
             }}>
                 <div
                     style={{
@@ -98,7 +97,16 @@ class App extends React.Component<Props, State> {
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
                 {App.renderHeader()}
                 {App.renderDownloadContainer()}
-                <div style={{width: '100%', height: '1px', backgroundColor: '#eee'}}/>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    width: '100%',
+                    marginTop: '12px'
+                }}>
+                    <label style={{fontSize: '14px', color: '#888'}}>创建并分享你的梦想</label>
+                </div>
+                <div style={{width: '100%', height: '1px', backgroundColor: '#eee', marginTop: '12px'}}/>
                 {this.renderLoginButtonContainer()}
             </div>
         );
@@ -127,10 +135,10 @@ class App extends React.Component<Props, State> {
                     }}
                     onClick={this.onLoginButtonClick}
                 >
-                    登录
+                    登录网页版
                 </Button>
-                <label style={{color: '#888', marginTop: '8px'}}>
-                    创建并分享你的梦想
+                <label style={{color: '#888', marginTop: '8px', fontSize: '12px'}}>
+                    网页版仅提供浏览功能
                 </label>
             </div>
         );

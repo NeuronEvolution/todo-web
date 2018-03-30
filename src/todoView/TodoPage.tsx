@@ -12,6 +12,8 @@ import {
 import { RootState } from '../redux';
 import { apiTodoGetFriendsList, apiTodoGetTodoListByCategory, FriendsListWithPage } from '../redux_todo';
 
+const androidDownloadImage = require('../images/android_download_qr.png');
+
 export interface Props {
     user: User;
     errorMessage: TextTimestamp;
@@ -79,6 +81,43 @@ class TodoPage extends React.Component<Props, State> {
                 <label style={{color: '#FFF', fontSize: '200%'}}>
                     @&nbsp;火&nbsp;&nbsp;星&nbsp;&nbsp;计&nbsp;&nbsp;划
                 </label>
+            </div>
+        );
+    }
+
+    private static renderDownloadContainer() {
+        return (
+            <div style={{
+                width: '100%',
+                maxWidth: '360px',
+                display: 'flex',
+                flexDirection: 'row',
+                marginTop: '48px'
+            }}>
+                <div
+                    style={{
+                        width: '50%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center'
+                    }}>
+                    <img
+                        style={{width: '90%', height: 'calc(width)'}}
+                        src={androidDownloadImage}/>
+                    <label>安卓版</label>
+                </div>
+                <div
+                    style={{
+                        width: '50%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center'
+                    }}>
+                    <img
+                        style={{width: '90%', height: 'calc(width)'}}
+                        src={androidDownloadImage}/>
+                    <label>苹果版(敬请期待)</label>
+                </div>
             </div>
         );
     }
@@ -161,6 +200,17 @@ class TodoPage extends React.Component<Props, State> {
                 width: '100%'
             }}>
                 {TodoPage.renderHeader()}
+                {TodoPage.renderDownloadContainer()}
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    width: '100%',
+                    marginTop: '12px'
+                }}>
+                    <label style={{fontSize: '14px', color: '#888'}}>网页版仅提供浏览功能</label>
+                </div>
+                <div style={{width: '100%', height: '1px', backgroundColor: '#eee', marginTop: '12px'}}/>
                 {this.renderFriendList()}
                 {this.renderGlobalToast()}
             </div>
