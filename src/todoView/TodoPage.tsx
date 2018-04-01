@@ -45,7 +45,7 @@ class TodoPage extends React.Component<Props, State> {
     private static getTodoStatusTextColor(p: TodoStatus): string {
         switch (p) {
             case TodoStatus.Ongoing:
-                return '#777';
+                return '#FF8800';
             case TodoStatus.Completed:
                 return '#ccc';
             case TodoStatus.Discard:
@@ -78,7 +78,7 @@ class TodoPage extends React.Component<Props, State> {
                 alignItems: 'center',
                 justifyContent: 'center'
             }}>
-                <label style={{color: '#FFF', fontSize: '200%'}}>
+                <label style={{color: '#FF8800', fontSize: '32px'}}>
                     @&nbsp;火&nbsp;&nbsp;星&nbsp;&nbsp;计&nbsp;&nbsp;划
                 </label>
             </div>
@@ -104,7 +104,7 @@ class TodoPage extends React.Component<Props, State> {
                     <img
                         style={{width: '90%', height: 'calc(width)'}}
                         src={androidDownloadImage}/>
-                    <label>安卓版</label>
+                    <label style={{fontSize: '14px', color: '#888888'}}>安卓版</label>
                 </div>
                 <div
                     style={{
@@ -116,7 +116,7 @@ class TodoPage extends React.Component<Props, State> {
                     <img
                         style={{width: '90%', height: 'calc(width)'}}
                         src={androidDownloadImage}/>
-                    <label>苹果版(敬请期待)</label>
+                    <label style={{fontSize: '14px', color: '#888888'}}>苹果版(敬请期待)</label>
                 </div>
             </div>
         );
@@ -158,14 +158,14 @@ class TodoPage extends React.Component<Props, State> {
                         alignItems: 'center'
                     }}
                 >
-                    <label style={{color: '#444', fontSize: '14px', marginLeft: '4%'}}>
+                    <label style={{color: '#008888', fontSize: '14px', marginLeft: '4%'}}>
                         {todoItem.title}
                     </label>
                     <label style={{marginRight: '4%', fontSize: '12px', color: statusColor}}>
                         {TodoPage.getTodoStatusName(todoItem.status)}
                     </label>
                 </div>
-                <div style={{width: '100%', height: '1px', backgroundColor: '#eee'}}/>
+                <div style={{width: '100%', height: '1px', backgroundColor: '#F8F8F8'}}/>
             </div>
         );
     }
@@ -235,7 +235,7 @@ class TodoPage extends React.Component<Props, State> {
                 <TimedComponent
                     contentElement={TodoPage.renderGlobalToastContent(text)}
                     timestamp={timestamp}
-                    intervalMillSec={5000}
+                    intervalMillSec={2000}
                     visible={visible}/>
             </div>
         );
@@ -292,7 +292,7 @@ class TodoPage extends React.Component<Props, State> {
                     this.onFriendItemClick(friendInfo);
                 }}
             >
-                <label style={{color: '#444', fontSize: '14px'}}>
+                <label style={{color: '#008888', fontSize: '14px'}}>
                     {friendInfo.userName}
                 </label>
                 <div style={{width: 120}}>
@@ -304,7 +304,7 @@ class TodoPage extends React.Component<Props, State> {
                         justifyContent: 'space-between'
                     }}>
                         <label style={{color: '#888', fontSize: '12px'}}>总计划数：</label>
-                        <label style={{color: '#888', fontSize: '12px'}}>{friendInfo.todoCount}</label>
+                        <label style={{color: '#FF8800', fontSize: '12px'}}>{friendInfo.todoCount}</label>
                     </div>
                     <div style={{
                         height: '24px',
@@ -314,7 +314,7 @@ class TodoPage extends React.Component<Props, State> {
                         justifyContent: 'space-between'
                     }}>
                         <label style={{color: '#888', fontSize: '12px'}}>是否公开：</label>
-                        <label style={{color: '#888', fontSize: '12px'}}>
+                        <label style={{color: '#FF8800', fontSize: '12px'}}>
                             {TodoPage.getTodoVisibilityName(friendInfo.todoVisibility)}
                         </label>
                     </div>
@@ -387,13 +387,13 @@ class TodoPage extends React.Component<Props, State> {
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                     justifyContent: 'center',
-                    backgroundColor: '#eee'
+                    backgroundColor: '#F8F8F8'
                 }}
                 onClick={() => {
                     this.onCategoryClick(itemGroup);
                 }}
             >
-                <label style={{color: '#444', fontSize: '14px', marginLeft: '4%'}}>
+                <label style={{color: '#FF8800', fontSize: '14px', marginLeft: '4%'}}>
                     {itemGroup.category}
                 </label>
             </div>

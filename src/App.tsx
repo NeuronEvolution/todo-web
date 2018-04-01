@@ -28,7 +28,7 @@ class App extends React.Component<Props, State> {
                 alignItems: 'center',
                 justifyContent: 'center'
             }}>
-                <label style={{color: '#FFF', fontSize: '200%'}}>
+                <label style={{color: '#FF8800', fontSize: '32px'}}>
                     @&nbsp;火&nbsp;&nbsp;星&nbsp;&nbsp;计&nbsp;&nbsp;划
                 </label>
             </div>
@@ -54,7 +54,7 @@ class App extends React.Component<Props, State> {
                     <img
                         style={{width: '90%', height: 'calc(width)'}}
                         src={androidDownloadImage}/>
-                    <label>安卓版</label>
+                    <label style={{fontSize: '14px', color: '#888888'}}>安卓版</label>
                 </div>
                 <div
                     style={{
@@ -66,7 +66,7 @@ class App extends React.Component<Props, State> {
                     <img
                         style={{width: '90%', height: 'calc(width)'}}
                         src={androidDownloadImage}/>
-                    <label>苹果版(敬请期待)</label>
+                    <label style={{fontSize: '14px', color: '#888888'}}>苹果版(敬请期待)</label>
                 </div>
             </div>
         );
@@ -104,7 +104,7 @@ class App extends React.Component<Props, State> {
                     width: '100%',
                     marginTop: '12px'
                 }}>
-                    <label style={{fontSize: '14px', color: '#888'}}>创建并分享你的梦想</label>
+                    <label style={{fontSize: '14px', color: '#FF8800'}}>创建并分享你的梦想</label>
                 </div>
                 <div style={{width: '100%', height: '1px', backgroundColor: '#eee', marginTop: '12px'}}/>
                 {this.renderLoginButtonContainer()}
@@ -124,7 +124,7 @@ class App extends React.Component<Props, State> {
                     style={{
                         width: '90%',
                         maxWidth: '360px',
-                        backgroundColor: '#0088FF',
+                        backgroundColor: '#008888',
                         color: '#fff',
                         marginTop: '48px',
                         fontSize: '200%',
