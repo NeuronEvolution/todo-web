@@ -2,10 +2,10 @@ import { Store } from 'react-redux';
 import { env } from '../../env';
 import { Dispatchable, StandardAction } from '../action';
 import { onApiError, onErrorMessage } from '../redux_error';
-import {DefaultApiFactory as UserPrivateApi, UserToken } from './user-private/gen';
+import {DefaultApiFactory as AccountPrivateApi, UserToken } from './user-private/gen';
 
-const userPrivateApiHost = env.host + '/api-private/v1/users';
-const userPrivateApi = UserPrivateApi(undefined, fetch, userPrivateApiHost);
+const accountPrivateApiHost = env.host + '/api/v1/accounts';
+const accountPrivateApi = AccountPrivateApi(undefined, fetch, accountPrivateApiHost);
 
 const ACTION_LOGIN_SUCCESS = 'ACTION_LOGIN_SUCCESS';
 const ACTION_USER_REFRESH_TOKEN = 'ACTION_USER_REFRESH_TOKEN';
@@ -34,11 +34,11 @@ export const onLoginCallbackDispatch = (userToken: UserToken): Dispatchable => (
 
 export const apiUserLogout = (store: Store<{userToken: UserToken}>): Dispatchable => (dispatch) => {
     const {accessToken, refreshToken} = store.getState().userToken;
-    return userPrivateApi.logout(accessToken, refreshToken).then(() => {
+    return accountPrivateApi.logout(accessToken, refreshToken).then(() => {
         dispatch(onErrorMessage('您已退出登录'));
         dispatch({type: ACTION_USER_LOGOUT_SUCCESS});
     }).catch((err) => {
-        dispatch(onApiError(err, userPrivateApiHost + '/logout'));
+        dispatch(onApiError(err, accountPrivateApiHost + '/logout'));
     });
 };
 
@@ -48,10 +48,10 @@ const isUnauthorizedError = (err: any): boolean => {
 };
 
 const apiRefreshUserToken = (store: Store<{userToken: UserToken}>, refreshToken: string): Promise<void> => {
-    return userPrivateApi.refreshToken(refreshToken).then((data: UserToken) => {
+    return accountPrivateApi.refreshToken(refreshToken).then((data: UserToken) => {
         store.dispatch({type: ACTION_USER_REFRESH_TOKEN, payload: data});
     }).catch((err) => {
-        store.dispatch(onApiError(err, userPrivateApiHost + 'refreshToken'));
+        store.dispatch(onApiError(err, accountPrivateApiHost + 'refreshToken'));
     });
 };
 

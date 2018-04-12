@@ -162,7 +162,7 @@ class App extends React.Component<Props, State> {
                     height: '100%',
                     borderWidth: '0px'
                 }}
-                loginUrl={env.host + '/web/user/login'}
+                loginUrl={env.host + '/web/account/login'}
                 onLoginCallback={() => {
                     console.log('');
                 }}
