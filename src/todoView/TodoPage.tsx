@@ -2,7 +2,7 @@ import { Map } from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatchable } from '../_common/action';
-import { User } from '../_common/login/redux_login';
+import { UserToken } from '../_common/login/user-private/gen';
 import TimedComponent from '../_common/TimedComponent';
 import { TextTimestamp } from '../_common/TimedText';
 import {
@@ -15,7 +15,7 @@ import { apiTodoGetFriendsList, apiTodoGetTodoListByCategory, FriendsListWithPag
 const androidDownloadImage = require('../images/android_download_qr.png');
 
 export interface Props {
-    user: User;
+    userToken: UserToken;
     errorMessage: TextTimestamp;
     friendsListWithPage: FriendsListWithPage;
     friendTodoListByCategoryMap: Map<string, TodoItemGroup[]>;
@@ -408,7 +408,7 @@ class TodoPage extends React.Component<Props, State> {
 }
 
 const selectProps = (rootState: RootState) => ({
-    user: rootState.user,
+    userToken: rootState.userToken,
     errorMessage: rootState.errorMessage,
     friendsListWithPage: rootState.friendsListWithPage,
     friendTodoListByCategoryMap: rootState.friendTodoListByCategoryMap

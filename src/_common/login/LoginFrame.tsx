@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatchable } from '../action';
-import { onLoginCallbackDispatch, User } from './redux_login';
+import { onLoginCallbackDispatch } from './redux_login';
+import { UserToken } from './user-private/gen';
 
 export interface Props {
     loginUrl: string;
     style?: React.CSSProperties;
-    onLoginCallback: (user: User) => void;
-    onLoginCallbackDispatch: (user: User) => Dispatchable;
+    onLoginCallback: (userToken: UserToken) => void;
+    onLoginCallbackDispatch: (userToken: UserToken) => Dispatchable;
 }
 
 const DefaultStyle: React.CSSProperties = {
@@ -19,8 +20,6 @@ const DefaultStyle: React.CSSProperties = {
     right: '0',
     width: '100%',
     height: '100%',
-    // maxWidth: '721px',
-    // maxHeight: '540px',
     borderColor: '#eee',
     borderWidth: '1px',
     backgroundColor: '#fff'
@@ -47,10 +46,10 @@ class LoginFrame extends React.Component<Props> {
         const data = e.data;
         switch (data.type) {
             case 'onLoginCallback':
-                const {userID, accessToken, refreshToken} = data.payload;
-                const user: User = {userID, accessToken, refreshToken};
-                this.props.onLoginCallbackDispatch(user);
-                this.props.onLoginCallback(user);
+                const {accessToken, refreshToken} = data.payload;
+                const userToken: UserToken = {accessToken, refreshToken};
+                this.props.onLoginCallbackDispatch(userToken);
+                this.props.onLoginCallback(userToken);
                 break;
             default:
                 return;

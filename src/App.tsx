@@ -2,7 +2,7 @@ import { Button } from 'material-ui';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import LoginFrame from './_common/login/LoginFrame';
-import { User } from './_common/login/redux_login';
+import { UserToken } from './_common/login/user-private/gen';
 import { env } from './env';
 import { RootState } from './redux';
 import TodoPage from './todoView/TodoPage';
@@ -10,7 +10,7 @@ import TodoPage from './todoView/TodoPage';
 const androidDownloadImage = require('./images/android_download_qr.png');
 
 export interface Props {
-    user: User;
+    userToken: UserToken;
 }
 
 interface State {
@@ -85,7 +85,7 @@ class App extends React.Component<Props, State> {
             return this.renderMainPage();
         }
 
-        if (this.props.user.accessToken === '') {
+        if (this.props.userToken.accessToken === '') {
             return this.renderLoginFrame();
         }
 
@@ -172,7 +172,7 @@ class App extends React.Component<Props, State> {
 }
 
 const selectProps = (rootState: RootState) => ({
-    user: rootState.user
+    userToken: rootState.userToken
 });
 
 export default connect(selectProps, {

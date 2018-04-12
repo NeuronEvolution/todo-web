@@ -1,6 +1,7 @@
 import { Map } from 'immutable';
 import { combineReducers } from 'redux';
-import { User, userReducer } from './_common/login/redux_login';
+import { userTokenReducer } from './_common/login/redux_login';
+import { UserToken } from './_common/login/user-private/gen';
 import { errorMessageReducer } from './_common/redux_error';
 import { TextTimestamp } from './_common/TimedText';
 import { TodoItemGroup } from './api/todo-private/gen';
@@ -10,7 +11,7 @@ import {
 } from './redux_todo';
 
 export interface RootState {
-    user: User;
+    userToken: UserToken;
     errorMessage: TextTimestamp;
     friendsListWithPage: FriendsListWithPage;
     todoListByCategory: TodoItemGroup[];
@@ -18,7 +19,7 @@ export interface RootState {
 }
 
 export const rootReducer = combineReducers<RootState>({
-    user: userReducer,
+    userToken: userTokenReducer,
     errorMessage: errorMessageReducer,
     friendsListWithPage: friendsListReducer,
     todoListByCategory: todoListByCategoryReducer,

@@ -7,7 +7,7 @@ import { env } from './env';
 import { REDUX_STORE } from './index';
 
 const todoPrivateApi = TodoPrivateApi(
-    {apiKey: () => REDUX_STORE.getState().user.accessToken},
+    {apiKey: () => REDUX_STORE.getState().userToken.accessToken},
     fetch, env.host + '/api-private/v1/todo'
 );
 import { Map } from 'immutable';
