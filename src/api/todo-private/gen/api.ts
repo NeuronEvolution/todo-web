@@ -639,42 +639,6 @@ export const DefaultApiFetchParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 
-         * @param {UserProfile} [userProfile] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateUserProfile(userProfile?: UserProfile, options: any = {}): FetchArgs {
-            const localVarPath = `/userProfile`;
-            const localVarUrlObj = url.parse(localVarPath, true);
-            const localVarRequestOptions = Object.assign({ method: 'POST' }, options);
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-					? configuration.apiKey("Authorization")
-					: configuration.apiKey;
-                localVarHeaderParameter["Authorization"] = localVarApiKeyValue;
-            }
-
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            localVarUrlObj.query = Object.assign({}, localVarUrlObj.query, localVarQueryParameter, options.query);
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = Object.assign({}, localVarHeaderParameter, options.headers);
-            const needsSerialization = (<any>"UserProfile" !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.body =  needsSerialization ? JSON.stringify(userProfile || {}) : (userProfile || "");
-
-            return {
-                url: url.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary 
          * @param {TodoVisibility} visibility 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -954,25 +918,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 
-         * @param {UserProfile} [userProfile] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateUserProfile(userProfile?: UserProfile, options?: any): (fetch?: FetchAPI, basePath?: string) => Promise<Response> {
-            const localVarFetchArgs = DefaultApiFetchParamCreator(configuration).updateUserProfile(userProfile, options);
-            return (fetch: FetchAPI = portableFetch, basePath: string = BASE_PATH) => {
-                return fetch(basePath + localVarFetchArgs.url, localVarFetchArgs.options).then((response) => {
-                    if (response.status >= 200 && response.status < 300) {
-                        return new Promise<Response>((resolve) => {return resolve(response);})
-                    } else {
-                        return response.json().then((data: {}) => {throw data; });
-                    }
-                });
-            };
-        },
-        /**
-         * 
-         * @summary 
          * @param {TodoVisibility} visibility 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1116,16 +1061,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, fetch?
          */
         updateTodo(todoId: string, todoItem: TodoItem, options?: any) {
             return DefaultApiFp(configuration).updateTodo(todoId, todoItem, options)(fetch, basePath);
-        },
-        /**
-         * 
-         * @summary 
-         * @param {UserProfile} [userProfile] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateUserProfile(userProfile?: UserProfile, options?: any) {
-            return DefaultApiFp(configuration).updateUserProfile(userProfile, options)(fetch, basePath);
         },
         /**
          * 
@@ -1280,18 +1215,6 @@ export class DefaultApi extends BaseAPI {
     /**
      * 
      * @summary 
-     * @param {UserProfile} [userProfile] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public updateUserProfile(userProfile?: UserProfile, options?: any) {
-        return DefaultApiFp(this.configuration).updateUserProfile(userProfile, options)(this.fetch, this.basePath);
-    }
-
-    /**
-     * 
-     * @summary 
      * @param {TodoVisibility} visibility 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1340,9 +1263,6 @@ export interface removeTodoParams {
 export interface updateTodoParams {
     todoId: string;
     todoItem: TodoItem;
-}
-export interface updateUserProfileParams {
-    userProfile?: UserProfile;
 }
 export interface updateUserProfileTodoVisibilityParams {
     visibility: TodoVisibility;

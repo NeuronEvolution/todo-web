@@ -214,30 +214,6 @@
             }
           }
         }
-      },
-      "post": {
-        "summary": "",
-        "operationId": "UpdateUserProfile",
-        "parameters": [
-          {
-            "in": "body",
-            "name": "userProfile",
-            "schema": {
-              "$ref": "#/definitions/UserProfile"
-            }
-          }
-        ],
-        "security": [
-          {
-            "Bearer": [
-            ]
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "ok"
-          }
-        }
       }
     },
     "/userProfile/userName": {
